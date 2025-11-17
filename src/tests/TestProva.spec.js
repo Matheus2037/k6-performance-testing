@@ -9,17 +9,17 @@ export const getUsersDuration = new Trend('get_users_duration', true);
 export const rateStatusOk = new Rate('rate_status_ok');
 
 export const options = {
-    stages: [
-      { duration: '1m', target: 7 },
-      { duration: '1m30s', target: 92 },
-      { duration: '1m', target: 92 }
-    ],
     thresholds: {
         http_req_failed: ['rate<0.25'], 
         
-        get_users_duration: ['p(91)<6800'],
-    }
-  };
+        get_users_duration: ['p(90)<6800'],
+    },
+    stages: [
+      { duration: '1m', target: 7 },
+      { duration: '1m', target: 92 },  
+      { duration: '1m30s', target: 92 }
+    ]
+};
 
 export default function () {
   const baseUrl = 'https://gorest.co.in/public/v2/users';
