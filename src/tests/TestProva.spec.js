@@ -15,7 +15,7 @@ export const options = {
     get_users_duration: ['p(91)<6800'],
   },
   stages: [
-    { duration: '0s', target: 7 },
+    { duration: '1m', target: 7 },
     
     { duration: '3m30s', target: 92 }
   ]
