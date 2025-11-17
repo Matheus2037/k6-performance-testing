@@ -16,7 +16,7 @@ export const options = {
   stages: [
     { duration: '3s', target: 2 },
     { duration: '3s', target: 6 },
-    { duration: '3s', target: 9 }
+    { duration: '10s', target: 10000 }
   ]
 };
 
@@ -28,7 +28,7 @@ export function handleSummary(data) {
 }
 
 export default function () {
-  const baseUrl = 'https://test.k6.io/';
+  const baseUrl = 'https://web.horr.com.br/';
 
   const params = {
     headers: {
