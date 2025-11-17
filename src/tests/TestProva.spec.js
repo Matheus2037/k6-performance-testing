@@ -4,19 +4,20 @@ import http from 'k6/http';
 import { check } from 'k6';
 import { Trend, Rate } from 'k6/metrics';
 
-export const getContactsDuration = new Trend('get_contacts', true);
-export const RateContentOK = new Rate('content_OK');
+export const getUsersDuration = new Trend('get_users_duration', true);
+
+export const rateStatusOk = new Rate('rate_status_ok');
 
 export const options = {
   thresholds: {
-    http_req_failed: ['rate<0.30'],
-    get_contacts: ['p(99)<500'],
-    content_OK: ['rate>0.95']
+    http_req_failed: ['rate<0.25'], 
+    
+    get_users_duration: ['p(91)<6800'],
   },
   stages: [
-    { duration: '3s', target: 2 },
-    { duration: '3s', target: 6 },
-    { duration: '10s', target: 10000 }
+    { duration: '0s', target: 7 },
+    
+    { duration: '3m30s', target: 92 }
   ]
 };
 
@@ -28,7 +29,7 @@ export function handleSummary(data) {
 }
 
 export default function () {
-  const baseUrl = 'https://web.horr.com.br/';
+  const baseUrl = 'https://gorest.co.in/public/v2/users';
 
   const params = {
     headers: {
@@ -40,11 +41,11 @@ export default function () {
 
   const res = http.get(`${baseUrl}`, params);
 
-  getContactsDuration.add(res.timings.duration);
+  getUsersDuration.add(res.timings.duration);
 
-  RateContentOK.add(res.status === OK);
+  rateStatusOk.add(res.status === OK);
 
   check(res, {
-    'GET Contacts - Status 200': () => res.status === OK
+    'GET Users - Status 200': () => res.status === OK
   });
 }
